@@ -1,0 +1,112 @@
+﻿@model WabPApi.Models.Banner
+
+@{
+    ViewData["Title"] = "Add Banner";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var photoPath = "~/images/" + (Model.PicPath ?? "placeholder.jpg");
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="AddBanner" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input asp-for="fleUploadImage" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose Main Image...</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="card-img-top" src=@photoPath id="imgPix" asp-append-version="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.PicPath)
+                    @Html.HiddenFor(model => model.ID)
+
+                    <div class="form-group">
+                        <input type="submit" value="Add Banner" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+            <br />
+            <div>
+                <div class="col-md-12">
+                    <h3>All Banners</h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>                                
+                                <th>Title</th>
+                                <th>Image</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mat in ViewBag.Banners)
+                            {
+                                var photoPath4 = "~/images/" + (@mat.PicPath ?? "placeholder.jpg");
+                                <tr>                                    
+                                    <td>@mat.Title</td>
+                                    <td>
+                                        <img class="img-thumbnail" src=@photoPath4 id="imgPix2" width="100" asp-append-version="true" />
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="AddBanner" asp-route-Id="@mat.ID" class="btn btn-outline-success">Edit</a>
+                                        &nbsp;
+                                        <form asp-action="DeleteBanner" asp-route-id="@mat.ID" method="post">
+                                            <button type="submit" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to delete @mat.Title')">Delete</button>
+                                        </form>
+                                        @*<a asp-controller="Admin" asp-action="DeleteBanner" asp-route-Id="@mat.ID" class="btn btn-outline-success">Delete</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                if (input.name == "fleUploadImage") {
+                    reader.onload = function (e) {
+                        $('#imgPix').attr('src', e.target.result);
+                    }
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#fleUploadImage").change(function () {
+            readURL2(this);
+        });
+
+        $(document).ready(function () {
+            $('.custom-file-input').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        });
+    </script>
+}

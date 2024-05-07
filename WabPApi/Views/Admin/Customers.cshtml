@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Book Downloads Status";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Customers Book Purchase Status</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Book</th>
+                            <th>Image</th>
+                            <th>Download Status</th>
+                            <th>Reset</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mat in ViewBag.AllCustomers)
+                        {
+                            var photoPath4 = "~/images/" + (mat.PicPath ?? "placeholder.jpg");
+                            <tr>
+                                <td>@mat.Email</td>
+                                <td>@mat.FirstName @mat.LastName</td>
+                                <td>@mat.Phone</td>
+                                <td>@mat.BookName</td>
+                                <td>
+                                    <img class="img-thumbnail" src=@photoPath4 id="imgPix2" height="100" width="60" asp-append-version="true" />
+                                </td>
+                                <td>@mat.Status</td>
+                                <td>
+                                    <form asp-action="EditCustomer" asp-route-id="@mat.Id" method="post">
+                                        <button type="submit" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to reset download for user @mat.Email')">Reset</button>
+                                    </form>
+                                    @*<a asp-controller="Admin" asp-action="EditCustomer" asp-route-Id="@mat.Id" class="btn btn-outline-success">Reset</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

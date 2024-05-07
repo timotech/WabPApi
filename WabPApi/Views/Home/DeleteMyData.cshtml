@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Wabp Ebook Delete My Data</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body class="container">
+    <div class="row mt-5 d-flex align-items-center justify-content-center">
+        <form asp-action="DeleteMyData" method="post">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <h3>Delete my data from wabp ebooks</h3><br /><br />
+                Enter your email: <input id="username" name="username" type="email" /><br /><br />
+                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to remove your account?')">Submit</button>
+                <br /><br />
+                @if (TempData["message"] != null)
+                {
+                    <div class="alert alert-info">
+                        @TempData["message"]
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "View All Customers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>All Customers</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mat in ViewBag.AllCustomers)
+                        {
+                            <tr>
+                                <td>@mat.Email</td>
+                                <td>@mat.FirstName @mat.LastName</td>
+                                <td>@mat.PhoneNumber</td>                               
+                                @*<td>
+                                    <form asp-action="EditCustomer" asp-route-id="@mat.Id" method="post">
+                                        <button type="submit" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to reset download for user @mat.Email')">Reset</button>
+                                    </form>
+                                </td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

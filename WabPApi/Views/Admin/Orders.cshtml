@@ -1,0 +1,96 @@
+﻿@model IEnumerable<WabPApi.Models.OrderDetail>
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>All Orders</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Order<br />Id</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Date</th>
+                            @*<th>Qty</th>*@
+                            @*<th>Price</th>*@
+                            <th>Amount</th>
+                            <th>Image</th>
+                            <th>Payment</th>
+                            @*<th>Status</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mat in Model)
+                        {
+                            var photoPath4 = "~/images/" + (mat.Book.PicPath ?? "placeholder.jpg");
+                            <tr>
+                                <td>@mat.OrderId</td>
+                                <td>@mat.Order.Email</td>
+                                <td>@mat.Order.FirstName <br /> @mat.Order.LastName</td>
+                                <td>@mat.Order.Phone</td>
+                                <td>@mat.Order.OrderDate</td>
+                                @*<td>@mat.Quantity</td>*@
+                                @*<td>@mat.UnitPrice</td>*@
+                                <td>@mat.Order.Total</td>
+                                <td>
+                                    <img class="img-thumbnail" src=@photoPath4 id="imgPix2" height="100" width="60" asp-append-version="true" />
+                                </td>
+                                <td>
+                                    @if (mat.PaymentStatus == 0)
+                                    {
+                                        <label><strong>Pay On Delivery</strong></label>
+                                    }
+                                    else
+                                    {
+                                        <label><strong>Paid</strong></label>
+                                    }
+                                </td>
+                                @*<td>                                    
+                                    @(mat.DeliveryStatus == 0 ? "Un-Processed" : mat.DeliveryStatus == 1 ? "On the way to Delivery" : "Delivered")
+                                    <br />
+                                    @if (mat.DeliveryStatus == 0)
+                                    {
+                                        <a asp-controller="Admin" asp-action="ProcessOrder" asp-route-Id="@mat.OrderDetailId" class="btn btn-warning text-white">Process</a>
+                                    }
+                                </td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        let selectedValue = 0;
+
+        $('#ddlStatus').change(function () {
+            selectedValue = $(this).val();
+        });
+
+        $("#btn").click(function (e) {
+            // Stop the normal navigation
+            e.preventDefault();
+
+            //Build the new URL
+            var url = $(this).attr("href");
+            url = url.replace("init", selectedValue);
+
+            //Navigate to the new URL
+            window.location.href = url;
+        });
+    });
+</script>*@
+}

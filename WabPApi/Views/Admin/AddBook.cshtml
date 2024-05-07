@@ -1,0 +1,227 @@
+﻿@model WabPApi.Models.Book
+
+@{
+    ViewData["Title"] = "Add Books";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var photoPath = "~/images/" + (Model.PicPath ?? "placeholder.jpg");
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="AddBook" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Description"))" class="custom-select mr-sm-2"></select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input asp-for="fleUploadImage" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose Main Image...</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="card-img-top" src=@photoPath id="imgPix" asp-append-version="true" />
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SpecialPrice" class="control-label"></label>
+                        <input asp-for="SpecialPrice" class="form-control" />
+                        <span asp-validation-for="SpecialPrice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author" class="control-label"></label>
+                        <input asp-for="Author" class="form-control" />
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Genre" class="control-label"></label>
+                        <select asp-for="Genre" class="form-control">
+                            <option>Select Genre</option>
+                            <option>Action and adventure</option>
+                            <option>Art/architecture</option>
+                            <option>Alternate history</option>
+                            <option>Autobiography</option>
+                            <option>Anthology</option>
+                            <option>Biography</option>
+                            <option>Chick lit</option>
+                            <option>Business/economics</option>
+                            <option>Children's</option>
+                            <option>Crafts/hobbies</option>
+                            <option>Classic</option>
+                            <option>Cookbook</option>
+                            <option>Comic book</option>
+                            <option>Diary</option>
+                            <option>Coming-of-age</option>
+                            <option>Dictionary</option>
+                            <option>Crime</option>
+                            <option>Encyclopedia</option>
+                            <option>Drama</option>
+                            <option>Guide</option>
+                            <option>Fairytale</option>
+                            <option>Health/fitness</option>
+                            <option>Fantasy</option>
+                            <option>History</option>
+                            <option>Graphic novel</option>
+                            <option>Home and garden</option>
+                            <option>Historical fiction</option>
+                            <option>Humor</option>
+                            <option>Horror</option>
+                            <option>Journal</option>
+                            <option>Mystery</option>
+                            <option>Math</option>
+                            <option>Paranormal romance</option>
+                            <option>Memoir</option>
+                            <option>Picture book</option>
+                            <option>Philosophy</option>
+                            <option>Poetry</option>
+                            <option>Prayer</option>
+                            <option>Political thriller</option>
+                            <option>Religion, spirituality, and new age</option>
+                            <option>Romance</option>
+                            <option>Textbook</option>
+                            <option>Satire</option>
+                            <option>True crime</option>
+                            <option>Science fiction</option>
+                            <option>Review</option>
+                            <option>Short story</option>
+                            <option>Science</option>
+                            <option>Suspense</option>
+                            <option>Self help</option>
+                            <option>Thriller</option>
+                            <option>Sports and leisure</option>
+                            <option>Western</option>
+                            <option>Travel</option>
+                            <option>Young adult</option>
+                            <option>True crime</option>
+                        </select>
+                        <span asp-validation-for="Genre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" rows="6" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullInfo" class="control-label"></label>
+                        <textarea asp-for="FullInfo" rows="7" class="form-control"></textarea>
+                        <span asp-validation-for="FullInfo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input asp-for="fleUploadEbook" class="form-control custom-file-input" />
+                            <label class="custom-file-label">Choose Ebook...</label>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.PicPath)
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.EbookPath)
+
+                    <div class="form-group">
+                        <input type="submit" value="Add Book" class="btn btn-success" /> &nbsp;
+                        <a asp-controller="Admin" asp-action="AddBook" asp-route-Id="0" class="btn btn-outline-success">Clear</a>
+                    </div>
+                </form>
+            </div>
+            <br />
+            <div>
+                <div class="col-md-12">
+                    <h3>All Books</h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Special<br />Price</th>
+                                <th>Image</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mat in ViewBag.AllProducts)
+                            {
+                                var photoPath4 = "~/images/" + (@mat.PicPath ?? "placeholder.jpg");
+                                <tr>
+                                    <td>@mat.Categories.Description</td>
+                                    <td>@mat.Title</td>
+                                    <td>@mat.Description</td>
+                                    <td>@mat.Price</td>
+                                    <td>@mat.SpecialPrice</td>
+                                    <td>
+                                        <img class="img-thumbnail" src=@photoPath4 id="imgPix2" height="100" width="60" asp-append-version="true" />
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Admin" asp-action="AddBook" asp-route-Id="@mat.Id" class="btn btn-outline-success">Edit</a>
+                                        &nbsp;
+                                        <form asp-action="DeleteBook" asp-route-Id="@mat.Id" method="post">
+                                            <button type="submit" class="btn btn-outline-success" onclick="return confirm('Are you sure you want to delete @mat.Title')">Delete</button>
+                                        </form>
+                                        @*<a asp-controller="Admin" asp-action="DeleteBook" asp-route-Id="@mat.Id" class="btn btn-outline-success">Delete</a>*@
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                if (input.name == "fleUploadImage") {
+                    reader.onload = function (e) {
+                        $('#imgPix').attr('src', e.target.result);
+                    }
+                }         
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#fleUploadImage").change(function () {
+            readURL2(this);
+        });
+
+        $(document).ready(function () {
+            $('.custom-file-input').on('change', function () {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+            })
+        });
+    </script>
+}

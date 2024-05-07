@@ -1,0 +1,18 @@
+﻿@model WabPApi.Models.AboutUs
+@{
+    ViewData["Title"] = "About";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - West African Book Publishers Ltd</title>
+</head>
+<body>
+    @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Description))
+</body>
+</html>
+

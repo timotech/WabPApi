@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Sales Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>All Sales</h3>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <form asp-action="Reports" class="d-flex justify-content-between align-items-center">
+                        From Date: <input type="date" id="fromDate" name="fromDate" class="form-control" />
+                        To Date: <input type="date" id="toDate" name="toDate" class="form-control" />
+                        <button type="submit" id="btnSubmit" class="btn btn-success">Find</button>
+                    </form>                    
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Book</th>
+                            <th>Quantity Sold</th>
+                            <th>Unit Price</th>
+                            <th>Amount</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mat in ViewBag.Sales)
+                        {
+                            var photoPath4 = "~/images/" + (mat.PicPath ?? "placeholder.jpg");
+                            <tr>
+                                <td>
+                                    <img class="img-thumbnail" src=@photoPath4 id="imgPix2" height="100" width="60" asp-append-version="true" />
+                                </td>
+                                <td>@mat.BookName</td>
+                                <td>@mat.Quantity</td>
+                                <td>@mat.UnitPrice</td>
+                                <td>@mat.Total</td>                            
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="5">
+                                Total: @ViewBag.Total
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
